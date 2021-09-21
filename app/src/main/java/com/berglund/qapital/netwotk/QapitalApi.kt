@@ -2,6 +2,7 @@ package com.berglund.qapital.netwotk
 
 import com.berglund.qapital.entities.ActivitiesEntity
 import com.berglund.qapital.entities.UserEntity
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,8 +12,8 @@ import java.util.*
 interface QapitalApi {
 
     @GET("activities/")
-    suspend fun getActivities(@Query("from") from: Date, @Query("to") to: Date): Response<UserEntity>
+    suspend fun getActivities(@Query("from") from: Date, @Query("to") to: Date): Call<ActivitiesEntity>
 
     @GET("users/{userId}")
-    suspend fun getUser(@Path("userId") userId: Int): Response<ActivitiesEntity>
+    suspend fun getUser(@Path("userId") userId: Int): Call<UserEntity>
 }
