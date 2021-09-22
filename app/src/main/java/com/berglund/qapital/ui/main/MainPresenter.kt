@@ -3,10 +3,12 @@ package com.berglund.qapital.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berglund.qapital.contracts.MainContract
+import com.berglund.qapital.models.ActivityModel
 import com.berglund.qapital.repository.ActivitiesRepository
 import com.berglund.qapital.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -32,13 +34,19 @@ class MainPresenter @Inject constructor(
             val repoResult = repository.fetchActivities(formatter.format(calendar.time), formatter.format(Date()))
             when (repoResult) {
                 is Result.Success -> {
-                    view.welcomeMessage("Successfully fetch data")
+                    repoResult.value.let {
+                        updateActivityList(it.activities)
+                    }
                 }
                 is Result.Error -> {
-                    view.welcomeMessage("Failed to fetch data")
+                    Timber.e("Failed to fetch data!")
                 }
             }
         }
+    }
+
+    private fun updateActivityList(activities: List<ActivityModel>) {
+        viewModelScope.launch(Dispatchers.Main) { view.updateActivityList(activities) }
     }
 
     override fun onViewCreated() {

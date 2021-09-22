@@ -1,7 +1,7 @@
 package com.berglund.qapital.di
 
 import com.berglund.qapital.BuildConfig
-import com.berglund.qapital.netwotk.QapitalApi
+import com.berglund.qapital.network.QapitalApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -12,7 +12,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 

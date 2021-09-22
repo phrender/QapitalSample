@@ -1,9 +1,11 @@
 package com.berglund.qapital.contracts
 
+import com.berglund.qapital.models.ActivityModel
+
 interface MainContract {
 
     interface View {
-        fun welcomeMessage(welcomeMessage: String)
+        fun updateActivityList(activities: List<ActivityModel>)
     }
 
     interface Presenter {

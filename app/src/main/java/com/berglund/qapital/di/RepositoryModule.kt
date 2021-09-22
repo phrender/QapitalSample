@@ -1,6 +1,6 @@
 package com.berglund.qapital.di
 
-import com.berglund.qapital.netwotk.QapitalApi
+import com.berglund.qapital.network.QapitalApi
 import com.berglund.qapital.repository.ActivitiesRepository
 import com.berglund.qapital.repository.UserRepository
 import dagger.Module

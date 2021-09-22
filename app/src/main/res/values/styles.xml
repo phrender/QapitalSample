@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/benton_sans_bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Message">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/benton_sans_medium</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+    <style name="Amount">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/benton_sans_medium</item>
+        <item name="android:textColor">@color/amount_color</item>
+    </style>
+
+    <style name="Date">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/benton_sans_light</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+</resources>
