@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Qapital</string>
 
+    <string name="activity_list_title">Activity</string>
     <string name="activity_entry_user_image_desc">Accountholder image</string>
 
 </resources>
