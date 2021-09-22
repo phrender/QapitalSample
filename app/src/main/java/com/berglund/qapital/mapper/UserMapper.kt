@@ -5,9 +5,7 @@ import com.berglund.qapital.models.UserModel
 
 class UserMapper : Mapper<UserEntity, UserModel> {
 
-    override fun map(model: UserEntity): UserModel =
-        UserModel(
-            model.userId,
-            model.displayName,
-            model.avatarUrl)
+    override fun map(entity: UserEntity): UserModel = entity.toModel()
+
+    private fun UserEntity.toModel(): UserModel = UserModel(userId, displayName, avatarUrl)
 }

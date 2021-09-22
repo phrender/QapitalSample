@@ -1,13 +1,18 @@
 package com.berglund.qapital.di
 
+import com.berglund.qapital.BuildConfig
 import com.berglund.qapital.netwotk.QapitalApi
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -17,18 +22,39 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient =
-        OkHttpClient.Builder()
+    fun provideOkHttpClient(): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+        builder
             .readTimeout(60L, TimeUnit.SECONDS)
             .writeTimeout(60L, TimeUnit.SECONDS)
-            .build()
+
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(provideLoggingInterceptor())
+        }
+
+        return builder.build()
+    }
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson =
+        GsonBuilder()
+            .setDateFormat("yyyy-MM-DD'T'HH:mm:ssZ")
+            .setLenient()
+            .create()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder()
+            .client(okHttpClient)
             .baseUrl("http://qapital-ios-testtask.herokuapp.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
     @Provides

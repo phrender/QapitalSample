@@ -1,11 +1,14 @@
 package com.berglund.qapital.entities
 
-import com.squareup.moshi.Json
-import java.util.*
+import com.google.gson.annotations.SerializedName
 
 data class ActivityEntity(
-    @field:Json(name = "message") val message: String,
-    @field:Json(name = "amount") val amount: Double,
-    @field:Json(name = "userId") val userId: Int,
-    @field:Json(name = "timestamp") val timestamp: Date
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("amount")
+    val amount: Double,
+    @SerializedName("userId")
+    val userId: Int,
+    @SerializedName("timestamp")
+    val timestamp: String
 )

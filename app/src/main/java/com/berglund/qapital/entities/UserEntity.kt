@@ -1,11 +1,12 @@
 package com.berglund.qapital.entities
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class UserEntity(
-    @field:Json(name = "userId") val userId: Int,
-    @field:Json(name = "displayName") val displayName: String,
-    @field:Json(name = "avatarUrl") val avatarUrl: String
+    @SerializedName("userId")
+    val userId: Int,
+    @SerializedName("displayName")
+    val displayName: String,
+    @SerializedName("avatarUrl")
+    val avatarUrl: String
 )

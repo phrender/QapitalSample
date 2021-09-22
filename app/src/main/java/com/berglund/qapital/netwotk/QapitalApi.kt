@@ -11,9 +11,9 @@ import java.util.*
 
 interface QapitalApi {
 
-    @GET("activities/")
-    suspend fun getActivities(@Query("from") from: Date, @Query("to") to: Date): Call<ActivitiesEntity>
+    @GET("activities")
+    fun getActivities(@Query("from", encoded = true) from: String, @Query("to", encoded = true) to: String): Call<ActivitiesEntity>
 
     @GET("users/{userId}")
-    suspend fun getUser(@Path("userId") userId: Int): Call<UserEntity>
+    fun getUser(@Path("userId") userId: Int): Call<UserEntity>
 }
