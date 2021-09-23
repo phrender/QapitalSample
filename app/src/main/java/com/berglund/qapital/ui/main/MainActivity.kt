@@ -2,6 +2,7 @@ package com.berglund.qapital.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.berglund.qapital.adapters.FeedAdapter
 import com.berglund.qapital.contracts.MainContract
 import com.berglund.qapital.databinding.ActivityMainBinding
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         presenter.onViewCreated()
+
+        binding.rvMainActivityList.layoutManager = LinearLayoutManager(baseContext)
+        binding.rvMainActivityList.addOnScrollListener(presenter.getScrollListener(binding.rvMainActivityList.layoutManager as LinearLayoutManager))
+
         binding.rvMainActivityList.adapter = adapter
     }
 

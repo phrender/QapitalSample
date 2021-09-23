@@ -2,6 +2,9 @@ package com.berglund.qapital.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.berglund.qapital.adapters.PaginationScrollListener
 import com.berglund.qapital.usecase.ActivitiesUseCase
 import com.berglund.qapital.contracts.MainContract
 import com.berglund.qapital.models.FeedModel
@@ -12,10 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -25,23 +27,28 @@ class MainPresenter @Inject constructor(
     private val userUseCase: UserUseCase
 ) : MainContract.Presenter, ViewModel() {
 
+    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:00:00+00:00")
+    private var requestFromDate: LocalDateTime = LocalDateTime.now()
+    private var requestToDate: LocalDateTime = LocalDateTime.now().minusWeeks(2)
+
     init {
         loadActivities()
     }
 
     private fun loadActivities() {
         viewModelScope.launch(Dispatchers.IO) {
-            val formatter = SimpleDateFormat("yyyy-MM-dd'T'00:00:00+00:00")
-            val calendar = Calendar.getInstance()
-
-            // Set start of september
-            calendar.set(2021, 8, 1)
-
-            activitiesUseCase.perform(formatter.format(calendar.time), formatter.format(Date())).collect { result ->
+            activitiesUseCase.perform(dateFormatter.format(requestFromDate), dateFormatter.format(requestToDate)).collect { result ->
                 when (result) {
                     is Result.Success -> {
 
                         val activities = result.value.activities
+
+                        if (activities.isEmpty()) {
+                            requestFromDate = result.value.oldest
+                            requestToDate = result.value.oldest.plusWeeks(2)
+                            loadActivities()
+                        }
+
                         val userIds = activities.map { activity -> activity.userId }.distinct()
 
                         val users = ArrayList<UserModel>()
@@ -68,6 +75,9 @@ class MainPresenter @Inject constructor(
                         }
 
                         updateActivityList(feedList)
+
+                        requestFromDate = requestToDate
+                        requestToDate = requestFromDate.minusWeeks(2)
                     }
                     is Result.Error -> {
                         Timber.e("Failed to fetch data!")
@@ -82,5 +92,15 @@ class MainPresenter @Inject constructor(
     }
 
     override fun onViewCreated() {
+    }
+
+    override fun getScrollListener(linearLayoutManager: LinearLayoutManager) = object : PaginationScrollListener(linearLayoutManager) {
+        override fun loadMoreItems() {
+            loadActivities()
+        }
+
+        override fun isLoading(): Boolean {
+            TODO("Not yet implemented")
+        }
     }
 }

@@ -7,9 +7,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Module
 @InstallIn(ActivityComponent::class)
+@ExperimentalCoroutinesApi
 abstract class MainModule {
 
     @Binds

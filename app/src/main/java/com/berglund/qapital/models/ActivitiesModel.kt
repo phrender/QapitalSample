@@ -1,8 +1,8 @@
 package com.berglund.qapital.models
 
-import java.util.*
+import org.threeten.bp.LocalDateTime
 
 data class ActivitiesModel(
-    val oldest: Date,
+    val oldest: LocalDateTime,
     val activities: List<ActivityModel>
 )

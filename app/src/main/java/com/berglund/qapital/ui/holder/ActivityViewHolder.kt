@@ -3,6 +3,7 @@ package com.berglund.qapital.ui.holder
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.berglund.qapital.R
 import com.berglund.qapital.databinding.ActivityListItemBinding
 import com.berglund.qapital.extensions.setHtmlText
@@ -22,7 +23,8 @@ class ActivityViewHolder(
             .load(item.avatarUrl) {
                 networkCachePolicy(CachePolicy.ENABLED)
                 placeholder(R.drawable.ic_account_img)
-                crossfade(true)
+                transformations(CircleCropTransformation())
+                crossfade(500)
             }
     }
 
