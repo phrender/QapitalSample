@@ -1,6 +1,7 @@
 package com.berglund.qapital.entities
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class ActivityEntity(
     @SerializedName("message")
@@ -10,5 +11,5 @@ data class ActivityEntity(
     @SerializedName("userId")
     val userId: Int,
     @SerializedName("timestamp")
-    val timestamp: String
+    val timestamp: Date
 )
