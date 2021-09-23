@@ -2,11 +2,13 @@ package com.berglund.qapital.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.berglund.qapital.usecase.ActivitiesUseCase
 import com.berglund.qapital.contracts.MainContract
 import com.berglund.qapital.models.ActivityModel
-import com.berglund.qapital.repository.ActivitiesRepository
 import com.berglund.qapital.util.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -14,9 +16,10 @@ import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class MainPresenter @Inject constructor(
     private val view: MainContract.View,
-    private val repository: ActivitiesRepository
+    private val useCase: ActivitiesUseCase
 ) : MainContract.Presenter, ViewModel() {
 
     init {
@@ -31,15 +34,14 @@ class MainPresenter @Inject constructor(
             // Set start of september
             calendar.set(2021, 8, 1)
 
-            val repoResult = repository.fetchActivities(formatter.format(calendar.time), formatter.format(Date()))
-            when (repoResult) {
-                is Result.Success -> {
-                    repoResult.value.let {
-                        updateActivityList(it.activities)
+            useCase.perform(formatter.format(calendar.time), formatter.format(Date())).collect { result ->
+                when (result) {
+                    is Result.Success -> {
+                        updateActivityList(result.value.activities)
                     }
-                }
-                is Result.Error -> {
-                    Timber.e("Failed to fetch data!")
+                    is Result.Error -> {
+                        Timber.e("Failed to fetch data!")
+                    }
                 }
             }
         }
