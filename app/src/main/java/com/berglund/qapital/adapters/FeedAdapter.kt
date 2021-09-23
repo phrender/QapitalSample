@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berglund.qapital.databinding.ActivityListItemBinding
 import com.berglund.qapital.models.ActivityModel
+import com.berglund.qapital.models.FeedModel
 import com.berglund.qapital.ui.holder.ActivityViewHolder
 
-class ActivityAdapter(itemList: List<ActivityModel>) : RecyclerView.Adapter<ActivityViewHolder>() {
+class FeedAdapter(itemList: List<FeedModel>) : RecyclerView.Adapter<ActivityViewHolder>() {
 
-    private var activityList: MutableList<ActivityModel> = itemList.toMutableList()
+    private var feedList: MutableList<FeedModel> = itemList.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
         val binding = ActivityListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,18 +19,18 @@ class ActivityAdapter(itemList: List<ActivityModel>) : RecyclerView.Adapter<Acti
     }
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
-        val item = activityList[position]
+        val item = feedList[position]
         holder.bind(item)
     }
 
-    override fun getItemCount(): Int = activityList.size
+    override fun getItemCount(): Int = feedList.size
 
-    fun updateActivityList(newList: List<ActivityModel>) {
-        val diffCallback = ActivityDiffCallback(activityList, newList)
+    fun updateFeedList(newList: List<FeedModel>) {
+        val diffCallback = ActivityDiffCallback(feedList, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        activityList.clear()
-        activityList.addAll(newList)
+        feedList.clear()
+        feedList.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
     }
 }

@@ -4,18 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
-    
-    <ImageView
-        android:id="@+id/activity_entry_user_image"
+
+    <!-- Could have used android:foreground but since I'm using API level 21 it's not available -->
+    <FrameLayout
+        android:id="@+id/activity_entry_user_image_holder"
         android:layout_width="@dimen/user_image_size"
         android:layout_height="@dimen/user_image_size"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_medium"
-        android:src="@drawable/ic_account_img"
-        android:contentDescription="@string/activity_entry_user_image_desc"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/ic_account_img"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/activity_entry_user_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_account_img"
+            android:contentDescription="@string/activity_entry_user_image_desc"
+            tools:src="@drawable/ic_account_img"/>
+
+        <ImageView
+            android:id="@+id/activity_entry_user_image_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/rounded_frame"
+            android:contentDescription="@null"/>
+    </FrameLayout>
 
     <TextView
         style="@style/Message"
@@ -27,7 +41,7 @@
         android:layout_marginEnd="@dimen/margin_xsmall"
         android:maxLines="2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/activity_entry_user_image"
+        app:layout_constraintStart_toEndOf="@id/activity_entry_user_image_holder"
         app:layout_constraintEnd_toStartOf="@id/activity_entry_amount"
         tools:text="You rounded up at whole Foods Market"/>
 
@@ -51,7 +65,7 @@
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginBottom="@dimen/margin_small"
         app:layout_constraintTop_toBottomOf="@id/activity_entry_message"
-        app:layout_constraintStart_toEndOf="@id/activity_entry_user_image"
+        app:layout_constraintStart_toEndOf="@id/activity_entry_user_image_holder"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Today"/>
 

@@ -11,7 +11,7 @@ class UserRepository @Inject constructor(
 ) : Repository {
 
     @WorkerThread
-    suspend fun fetchUser(userId: Int) = apiCall(UserMapper()) {
+    fun fetchUser(userId: Int) = apiCall(UserMapper()) {
         api.getUser(userId)
     }
 }

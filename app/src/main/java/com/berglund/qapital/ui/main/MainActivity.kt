@@ -2,11 +2,10 @@ package com.berglund.qapital.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.berglund.qapital.adapters.ActivityAdapter
+import com.berglund.qapital.adapters.FeedAdapter
 import com.berglund.qapital.contracts.MainContract
 import com.berglund.qapital.databinding.ActivityMainBinding
-import com.berglund.qapital.models.ActivityModel
+import com.berglund.qapital.models.FeedModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
-    private val adapter = ActivityAdapter(emptyList())
+    private val adapter = FeedAdapter(emptyList())
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.rvMainActivityList.adapter = adapter
     }
 
-    override fun updateActivityList(activities: List<ActivityModel>) {
-        adapter.updateActivityList(activities)
+    override fun updateFeedList(feed: List<FeedModel>) {
+        adapter.updateFeedList(feed)
     }
 }

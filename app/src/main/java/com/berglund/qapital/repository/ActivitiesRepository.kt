@@ -10,10 +10,8 @@ class ActivitiesRepository @Inject constructor(
     private val api: QapitalApi
 ) : Repository {
 
-    private val mapper = ActivitiesMapper()
-
     @WorkerThread
-    suspend fun fetchActivities(from: String, to: String) = apiCall(mapper) {
+    fun fetchActivities(from: String, to: String) = apiCall(ActivitiesMapper()) {
         api.getActivities(from, to)
     }
 }

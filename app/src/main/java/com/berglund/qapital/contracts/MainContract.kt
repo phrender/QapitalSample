@@ -1,11 +1,11 @@
 package com.berglund.qapital.contracts
 
-import com.berglund.qapital.models.ActivityModel
+import com.berglund.qapital.models.FeedModel
 
 interface MainContract {
 
     interface View {
-        fun updateActivityList(activities: List<ActivityModel>)
+        fun updateFeedList(feed: List<FeedModel>)
     }
 
     interface Presenter {
