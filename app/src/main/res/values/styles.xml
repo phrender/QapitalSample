@@ -9,7 +9,7 @@
 
     <style name="Message">
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/benton_sans_medium</item>
+        <item name="android:fontFamily">@font/benton_sans_regular</item>
         <item name="android:textColor">@color/default_text_color</item>
     </style>
 
