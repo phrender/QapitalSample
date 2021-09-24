@@ -1,6 +1,7 @@
 package com.berglund.qapital.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.berglund.qapital.adapters.FeedAdapter
@@ -16,8 +17,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
-    private val adapter = FeedAdapter(emptyList())
-
+    private val adapter = FeedAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,15 +25,20 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter.onViewCreated()
-
         binding.rvMainActivityList.layoutManager = LinearLayoutManager(baseContext)
-        binding.rvMainActivityList.addOnScrollListener(presenter.getScrollListener(binding.rvMainActivityList.layoutManager as LinearLayoutManager))
-
+        adapter.nextPageListener = presenter.getScrollListener()
         binding.rvMainActivityList.adapter = adapter
+
+        presenter.loadFeed()
     }
 
     override fun updateFeedList(feed: List<FeedEntryModel>) {
+        val lastScrollPosition = (binding.rvMainActivityList.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
         adapter.updateFeedList(feed)
+        (binding.rvMainActivityList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(lastScrollPosition, 0)
+    }
+
+    override fun isLoadingData(isLoading: Boolean) {
+        binding.pbMainProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

@@ -10,9 +10,14 @@ import com.berglund.qapital.models.FeedEntryModel
 import com.berglund.qapital.models.FeedModel
 import com.berglund.qapital.ui.holder.ActivityViewHolder
 
-class FeedAdapter(itemList: List<FeedEntryModel>) : RecyclerView.Adapter<ActivityViewHolder>() {
+class FeedAdapter : RecyclerView.Adapter<ActivityViewHolder>() {
 
-    private var feedList: MutableList<FeedEntryModel> = itemList.toMutableList()
+    companion object {
+        private const val NEXT_PAGE_OFFSET = 3
+    }
+
+    var nextPageListener: NextPageLoaderListener? = null
+    private var feedList: MutableList<FeedEntryModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
         val binding = ActivityListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,17 +25,25 @@ class FeedAdapter(itemList: List<FeedEntryModel>) : RecyclerView.Adapter<Activit
     }
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
-        val item = feedList[position]
-        holder.bind(item)
+        checkFetchNextPage(position)
+        holder.bind(feedList[position])
     }
 
     override fun getItemCount(): Int = feedList.size
+
+    private fun checkFetchNextPage(position: Int) {
+        nextPageListener?.let {
+            if (position >= feedList.size - NEXT_PAGE_OFFSET) {
+                it.loadNextPage()
+            }
+        }
+    }
 
     fun updateFeedList(newList: List<FeedEntryModel>) {
         val diffCallback = ActivityDiffCallback(feedList, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        //feedList.clear()
+        feedList.clear()
         feedList.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
     }

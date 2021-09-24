@@ -49,6 +49,7 @@ class FeedUseCase @Inject constructor(
         }
             .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
+            .debounce(250L)
     }
 
     private fun getUserIds(activitiesResult: Result<ActivitiesModel>): Result<List<Int>> = activitiesResult into {

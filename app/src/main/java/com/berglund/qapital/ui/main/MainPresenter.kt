@@ -3,6 +3,7 @@ package com.berglund.qapital.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.berglund.qapital.adapters.NextPageLoaderListener
 import com.berglund.qapital.adapters.PaginationScrollListener
 import com.berglund.qapital.contracts.MainContract
 import com.berglund.qapital.models.FeedEntryModel
@@ -30,28 +31,26 @@ class MainPresenter @Inject constructor(
     private var requestFromDate: LocalDateTime = LocalDateTime.now(ZoneId.systemDefault()).minusWeeks(2)
     private var requestToDate: LocalDateTime = LocalDateTime.now(ZoneId.systemDefault())
 
-    init {
+    override fun loadFeed() {
         loadActivities()
     }
 
     private fun loadActivities() {
         viewModelScope.launch(Dispatchers.IO) {
-
             feedUseCase.perform(FeedUseCase.RetrievalParams(dateFormatter.format(requestFromDate), dateFormatter.format(requestToDate))).collect { feed ->
                 when (feed) {
                     is Result.Success -> {
                         if (feed.value.feedEntries.isEmpty()) {
                             requestFromDate = requestFromDate.minusWeeks(2)
-                            requestToDate = requestToDate.minusWeeks(2)
                             loadActivities()
                         }
 
                         updateActivityList(feed.value.feedEntries)
 
                         requestFromDate = requestFromDate.minusWeeks(2)
-                        requestToDate = requestToDate.minusWeeks(2)
                     }
                     is Result.Error -> {
+                        viewModelScope.launch { view.isLoadingData(false) }
                         Timber.e("Failed to load feed data!")
                     }
                 }
@@ -60,17 +59,12 @@ class MainPresenter @Inject constructor(
     }
 
     private fun updateActivityList(feed: List<FeedEntryModel>) {
-        viewModelScope.launch(Dispatchers.Main) { view.updateFeedList(feed) }
+        viewModelScope.launch { view.updateFeedList(feed) }
     }
 
-    override fun onViewCreated() {
-    }
-
-    override fun getScrollListener(linearLayoutManager: LinearLayoutManager) = object : PaginationScrollListener(linearLayoutManager) {
-        override fun loadMoreItems() {
+    override fun getScrollListener() = object : NextPageLoaderListener {
+        override fun loadNextPage() {
             loadActivities()
         }
-
-        override fun isLoading(): Boolean = false
     }
 }
