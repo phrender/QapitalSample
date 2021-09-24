@@ -22,7 +22,7 @@ class ActivitiesRepository @Inject constructor(
     override fun fetch(params: RetrievalParams): Result<ActivitiesModel> =
         apiCall(ActivitiesMapper()) { api.getActivities(params.requestFromDate, params.requestToDate) }
 
-    sealed class RetrievalParams(
+    open class RetrievalParams(
         open val requestFromDate: String,
         open val requestToDate: String
     ) : Repository.RepositoryParams()

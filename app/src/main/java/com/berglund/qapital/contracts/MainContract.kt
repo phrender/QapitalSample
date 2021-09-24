@@ -2,12 +2,12 @@ package com.berglund.qapital.contracts
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.berglund.qapital.adapters.PaginationScrollListener
-import com.berglund.qapital.models.FeedModel
+import com.berglund.qapital.models.FeedEntryModel
 
 interface MainContract {
 
     interface View {
-        fun updateFeedList(feed: List<FeedModel>)
+        fun updateFeedList(feed: List<FeedEntryModel>)
     }
 
     interface Presenter {

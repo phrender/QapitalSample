@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.berglund.qapital.adapters.FeedAdapter
 import com.berglund.qapital.contracts.MainContract
 import com.berglund.qapital.databinding.ActivityMainBinding
-import com.berglund.qapital.models.FeedModel
+import com.berglund.qapital.models.FeedEntryModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.rvMainActivityList.adapter = adapter
     }
 
-    override fun updateFeedList(feed: List<FeedModel>) {
+    override fun updateFeedList(feed: List<FeedEntryModel>) {
         adapter.updateFeedList(feed)
     }
 }

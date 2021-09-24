@@ -5,7 +5,7 @@ import java.util.*
 
 data class ActivitiesEntity(
     @SerializedName("oldest")
-    val oldest: Date,
+    val oldest: String,
     @SerializedName("activities")
     val activities: List<ActivityEntity>?
 )

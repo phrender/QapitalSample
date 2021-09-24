@@ -8,9 +8,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 @Module
 @InstallIn(ViewModelComponent::class)
+@ExperimentalCoroutinesApi
 object RepositoryModule {
 
     @Provides

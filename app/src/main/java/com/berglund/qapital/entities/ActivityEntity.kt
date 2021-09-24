@@ -11,5 +11,5 @@ data class ActivityEntity(
     @SerializedName("userId")
     val userId: Int,
     @SerializedName("timestamp")
-    val timestamp: Date
+    val timestamp: String
 )

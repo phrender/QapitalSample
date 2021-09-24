@@ -1,22 +1,22 @@
 package com.berglund.qapital.usecase
 
+import com.berglund.qapital.models.UserModel
 import com.berglund.qapital.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
+import com.berglund.qapital.util.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class UserUseCase @Inject constructor(
     private val userRepository: UserRepository
-) {
+) : ArgUseCase<Flow<Result<UserModel>>, UserUseCase.RetrievalParams> {
 
-    suspend fun perform(userId: Int) = flow {
-        val result = userRepository.fetchUser(userId)
-        emit(result)
-    }
-        .distinctUntilChanged()
-        .flowOn(Dispatchers.IO)
+    override fun perform(arg: RetrievalParams): Flow<Result<UserModel>> =
+        flowOf(userRepository.fetch(UserRepository.RetrievalParams(arg.userId)))
+
+    data class RetrievalParams(
+        val userId: Int
+    )
 }

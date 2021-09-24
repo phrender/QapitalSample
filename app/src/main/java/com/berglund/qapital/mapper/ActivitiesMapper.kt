@@ -5,6 +5,7 @@ import com.berglund.qapital.models.ActivitiesModel
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
 
 class ActivitiesMapper: Mapper<ActivitiesEntity, ActivitiesModel> {
 
@@ -13,7 +14,7 @@ class ActivitiesMapper: Mapper<ActivitiesEntity, ActivitiesModel> {
     override fun map(model: ActivitiesEntity): ActivitiesModel = model.toModel()
 
     private fun ActivitiesEntity.toModel(): ActivitiesModel = ActivitiesModel(
-        LocalDateTime.ofInstant(Instant.ofEpochMilli(oldest.time), ZoneId.systemDefault()),
+        LocalDateTime.parse(oldest, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+00:00")),
         activities?.map {
             activityMapper.map(it)
         } ?: emptyList()

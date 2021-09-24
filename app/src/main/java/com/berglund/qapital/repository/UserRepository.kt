@@ -16,7 +16,7 @@ class UserRepository @Inject constructor(
     override fun fetch(params: RetrievalParams): Result<UserModel> =
         apiCall(UserMapper()) { api.getUser(params.userId) }
 
-    sealed class RetrievalParams(
+    open class RetrievalParams(
         open val userId: Int
     ) : Repository.RepositoryParams()
 }

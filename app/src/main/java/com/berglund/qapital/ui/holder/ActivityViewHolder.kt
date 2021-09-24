@@ -7,6 +7,7 @@ import coil.transform.CircleCropTransformation
 import com.berglund.qapital.R
 import com.berglund.qapital.databinding.ActivityListItemBinding
 import com.berglund.qapital.extensions.setHtmlText
+import com.berglund.qapital.models.FeedEntryModel
 import com.berglund.qapital.models.FeedModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -15,7 +16,7 @@ class ActivityViewHolder(
     private val binding: ActivityListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: FeedModel) {
+    fun bind(item: FeedEntryModel) {
         binding.activityEntryMessage.setHtmlText(item.message)
         binding.activityEntryAmount.text = String.format("$ %.2f", item.amount)
         binding.activityEntryDate.text = formatEntryDate(item.timestamp)
@@ -36,6 +37,6 @@ class ActivityViewHolder(
             return "Yesterday"
         }
 
-        return timestamp.format(DateTimeFormatter.ofPattern("D MMM YYYY"))
+        return timestamp.format(DateTimeFormatter.ofPattern("d MMM YYYY"))
     }
 }

@@ -5,6 +5,7 @@ import com.berglund.qapital.models.ActivityModel
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
 
 class ActivityMapper : Mapper<ActivityEntity, ActivityModel> {
 
@@ -14,6 +15,6 @@ class ActivityMapper : Mapper<ActivityEntity, ActivityModel> {
         message,
         amount,
         userId,
-        LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp.time), ZoneId.systemDefault())
+        LocalDateTime.parse(timestamp, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+00:00"))
     )
 }
