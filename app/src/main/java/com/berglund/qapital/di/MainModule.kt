@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -17,6 +18,7 @@ abstract class MainModule {
     @Binds
     abstract fun bindActivity(activity: MainActivity): MainContract.View
 
+    @FlowPreview
     @Binds
     abstract fun bindPresenter(presenter: MainPresenter): MainContract.Presenter
 }
