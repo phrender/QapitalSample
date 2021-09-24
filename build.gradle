@@ -5,11 +5,13 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
     }
 }
 
@@ -20,4 +22,8 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    KtLintReportTask = org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
 }

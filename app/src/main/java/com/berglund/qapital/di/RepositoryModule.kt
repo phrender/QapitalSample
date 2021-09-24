@@ -9,18 +9,17 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 
 @Module
 @InstallIn(ViewModelComponent::class)
 @ExperimentalCoroutinesApi
 object RepositoryModule {
 
-    @Provides
-    @ViewModelScoped
-    fun provideUserRepository(api: QapitalApi): UserRepository = UserRepository(api)
+	@Provides
+	@ViewModelScoped
+	fun provideUserRepository(api: QapitalApi): UserRepository = UserRepository(api)
 
-    @Provides
-    @ViewModelScoped
-    fun provideActivitiesRepository(api :QapitalApi) = ActivitiesRepository(api)
+	@Provides
+	@ViewModelScoped
+	fun provideActivitiesRepository(api: QapitalApi) = ActivitiesRepository(api)
 }

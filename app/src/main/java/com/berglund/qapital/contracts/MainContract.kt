@@ -5,16 +5,16 @@ import com.berglund.qapital.models.FeedEntryModel
 
 interface MainContract {
 
-    interface View {
-        fun updateFeedList(feed: List<FeedEntryModel>)
+	interface View {
+		fun updateFeedList(feed: List<FeedEntryModel>)
 
-        fun isLoadingData(isLoading: Boolean)
-    }
+		fun isLoadingData(isLoading: Boolean)
+	}
 
-    interface Presenter {
+	interface Presenter {
 
-        fun loadFeed()
+		fun loadFeed()
 
-        fun getScrollListener(): NextPageLoaderListener
-    }
+		fun getScrollListener(): NextPageLoaderListener
+	}
 }

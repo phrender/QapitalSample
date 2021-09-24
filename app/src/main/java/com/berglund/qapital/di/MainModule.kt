@@ -15,10 +15,10 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 abstract class MainModule {
 
-    @Binds
-    abstract fun bindActivity(activity: MainActivity): MainContract.View
+	@Binds
+	abstract fun bindActivity(activity: MainActivity): MainContract.View
 
-    @FlowPreview
-    @Binds
-    abstract fun bindPresenter(presenter: MainPresenter): MainContract.Presenter
+	@FlowPreview
+	@Binds
+	abstract fun bindPresenter(presenter: MainPresenter): MainContract.Presenter
 }

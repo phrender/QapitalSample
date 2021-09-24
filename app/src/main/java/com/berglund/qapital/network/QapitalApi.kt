@@ -9,9 +9,9 @@ import retrofit2.http.Query
 
 interface QapitalApi {
 
-    @GET("activities")
-    fun getActivities(@Query("from", encoded = true) from: String, @Query("to", encoded = true) to: String): Call<ActivitiesEntity>
+	@GET("activities")
+	fun getActivities(@Query("from", encoded = true) from: String, @Query("to", encoded = true) to: String): Call<ActivitiesEntity>
 
-    @GET("users/{userId}")
-    fun getUser(@Path("userId") userId: Int): Call<UserEntity>
+	@GET("users/{userId}")
+	fun getUser(@Path("userId") userId: Int): Call<UserEntity>
 }

@@ -14,31 +14,31 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MainContract.View {
 
-    @Inject
-    lateinit var presenter: MainContract.Presenter
-    private lateinit var binding: ActivityMainBinding
-    private val adapter = FeedAdapter()
+	@Inject
+	lateinit var presenter: MainContract.Presenter
+	private lateinit var binding: ActivityMainBinding
+	private val adapter = FeedAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+		binding = ActivityMainBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 
-        binding.rvMainActivityList.layoutManager = LinearLayoutManager(baseContext)
-        adapter.nextPageListener = presenter.getScrollListener()
-        binding.rvMainActivityList.adapter = adapter
+		binding.rvMainActivityList.layoutManager = LinearLayoutManager(baseContext)
+		adapter.nextPageListener = presenter.getScrollListener()
+		binding.rvMainActivityList.adapter = adapter
 
-        presenter.loadFeed()
-    }
+		presenter.loadFeed()
+	}
 
-    override fun updateFeedList(feed: List<FeedEntryModel>) {
-        val lastScrollPosition = (binding.rvMainActivityList.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-        adapter.updateFeedList(feed)
-        (binding.rvMainActivityList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(lastScrollPosition, 0)
-    }
+	override fun updateFeedList(feed: List<FeedEntryModel>) {
+		val lastScrollPosition = (binding.rvMainActivityList.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+		adapter.updateFeedList(feed)
+		(binding.rvMainActivityList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(lastScrollPosition, 0)
+	}
 
-    override fun isLoadingData(isLoading: Boolean) {
-        binding.pbMainProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
+	override fun isLoadingData(isLoading: Boolean) {
+		binding.pbMainProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+	}
 }

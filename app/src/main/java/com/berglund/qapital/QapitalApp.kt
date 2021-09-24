@@ -8,13 +8,13 @@ import timber.log.Timber
 @HiltAndroidApp
 class QapitalApp : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
+	override fun onCreate() {
+		super.onCreate()
 
-        AndroidThreeTen.init(this)
+		AndroidThreeTen.init(this)
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-    }
+		if (BuildConfig.DEBUG) {
+			Timber.plant(Timber.DebugTree())
+		}
+	}
 }

@@ -9,14 +9,14 @@ import com.berglund.qapital.util.Result
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val api: QapitalApi
+	private val api: QapitalApi
 ) : Repository<UserModel, UserRepository.RetrievalParams>() {
 
-    @WorkerThread
-    override fun fetch(params: RetrievalParams): Result<UserModel> =
-        apiCall(UserMapper()) { api.getUser(params.userId) }
+	@WorkerThread
+	override fun fetch(params: RetrievalParams): Result<UserModel> =
+		apiCall(UserMapper()) { api.getUser(params.userId) }
 
-    open class RetrievalParams(
-        open val userId: Int
-    ) : Repository.RepositoryParams()
+	open class RetrievalParams(
+		open val userId: Int
+	) : Repository.RepositoryParams()
 }

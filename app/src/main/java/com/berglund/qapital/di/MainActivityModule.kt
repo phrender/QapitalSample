@@ -11,6 +11,6 @@ import dagger.hilt.android.components.ActivityComponent
 @InstallIn(ActivityComponent::class)
 object MainActivityModule {
 
-    @Provides
-    fun bindActivity(activity: Activity): MainActivity = activity as MainActivity
+	@Provides
+	fun bindActivity(activity: Activity): MainActivity = activity as MainActivity
 }

@@ -8,55 +8,55 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-        builder
-            .readTimeout(60L, TimeUnit.SECONDS)
-            .writeTimeout(60L, TimeUnit.SECONDS)
+	@Provides
+	@Singleton
+	fun provideOkHttpClient(): OkHttpClient {
+		val builder = OkHttpClient.Builder()
+		builder
+			.readTimeout(60L, TimeUnit.SECONDS)
+			.writeTimeout(60L, TimeUnit.SECONDS)
 
-        if (BuildConfig.DEBUG) {
-            builder.addInterceptor(provideLoggingInterceptor())
-        }
+		if (BuildConfig.DEBUG) {
+			builder.addInterceptor(provideLoggingInterceptor())
+		}
 
-        return builder.build()
-    }
+		return builder.build()
+	}
 
-    @Provides
-    @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+	@Provides
+	@Singleton
+	fun provideLoggingInterceptor(): HttpLoggingInterceptor =
+		HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    @Provides
-    @Singleton
-    fun provideGson(): Gson =
-        GsonBuilder()
-            .setDateFormat("yyyy-MM-DD'T'HH:mm:ssZ")
-            .setLenient()
-            .create()
+	@Provides
+	@Singleton
+	fun provideGson(): Gson =
+		GsonBuilder()
+			.setDateFormat("yyyy-MM-DD'T'HH:mm:ssZ")
+			.setLenient()
+			.create()
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
-        Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl("http://qapital-ios-testtask.herokuapp.com/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+	@Provides
+	@Singleton
+	fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
+		Retrofit.Builder()
+			.client(okHttpClient)
+			.baseUrl("http://qapital-ios-testtask.herokuapp.com/")
+			.addConverterFactory(GsonConverterFactory.create(gson))
+			.build()
 
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): QapitalApi = retrofit.create(QapitalApi::class.java)
+	@Provides
+	@Singleton
+	fun provideApiService(retrofit: Retrofit): QapitalApi = retrofit.create(QapitalApi::class.java)
 }
