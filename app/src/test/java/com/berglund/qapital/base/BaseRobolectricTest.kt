@@ -8,7 +8,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = QapitalApp::class)
+@Config(application = QapitalTestApplication::class)
 abstract class BaseRobolectricTest {
 
 	fun getApp(): QapitalApp = ApplicationProvider.getApplicationContext()

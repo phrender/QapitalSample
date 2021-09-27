@@ -11,10 +11,14 @@ class QapitalApp : Application() {
 	override fun onCreate() {
 		super.onCreate()
 
-		AndroidThreeTen.init(this)
+		initAndroidThreeTen()
 
 		if (BuildConfig.DEBUG) {
 			Timber.plant(Timber.DebugTree())
 		}
+	}
+
+	private fun initAndroidThreeTen() {
+		AndroidThreeTen.init(this)
 	}
 }
