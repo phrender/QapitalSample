@@ -26,3 +26,13 @@ infix fun <T : Any, U : Any> Result<T>.intoFlow(f: (T) -> Flow<Result<U>>) =
 		is Result.Success -> f(value)
 		is Result.Error -> flowOf(copy())
 	}
+
+fun <T : Any> Result<T>.toShortString() =
+	when (this) {
+		is Result.Success -> {
+			"Result.Success(type: ${value.javaClass.simpleName})"
+		}
+		is Result.Error -> {
+			"Result.Error(message: $message, cause ${cause?.message})"
+		}
+	}
