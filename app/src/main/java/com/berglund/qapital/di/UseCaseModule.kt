@@ -29,5 +29,5 @@ object UseCaseModule {
 
 	@Provides
 	@Singleton
-	fun bindFeedUseCase(activityUseCase: ActivitiesUseCase, userRepository: UserRepository): FeedUseCase = FeedUseCase(activityUseCase, userRepository)
+	fun bindFeedUseCase(activitiesRepository: ActivitiesRepository, userRepository: UserRepository): FeedUseCase = FeedUseCase(activitiesRepository, userRepository)
 }
