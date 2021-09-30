@@ -31,7 +31,7 @@ class FeedAdapter : RecyclerView.Adapter<ActivityViewHolder>() {
 
 	private fun checkFetchNextPage(position: Int) {
 		nextPageListener?.let {
-			if (position >= feedList.size - NEXT_PAGE_OFFSET) {
+			if (position >= feedList.size - NEXT_PAGE_OFFSET && feedList.isNotEmpty()) {
 				it.loadNextPage()
 			}
 		}

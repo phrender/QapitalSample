@@ -60,7 +60,6 @@ class FeedUseCase @Inject constructor(
 			)
 		}
 			.debounce(250L)
-			.distinctUntilChanged()
 			.flowOn(Dispatchers.IO)
 	}
 

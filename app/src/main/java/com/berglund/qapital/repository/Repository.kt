@@ -68,7 +68,7 @@ abstract class Repository<Model : Any, in Params : Repository.RepositoryParams>(
 	// TODO: Remove me
 	@Suppress("UNUSED_PARAMETER")
 	private fun shouldRefreshData(result: StorageResult<Model>, params: Params) =
-		params.refreshAtAge != NO_MAX_AGE // Add a time limit in other params
+		params.refreshAtAge == NO_MAX_AGE // Add a time limit in other params
 
 	open class RepositoryParams(
 		open val refreshAtAge: Long = NO_MAX_AGE,
