@@ -18,10 +18,9 @@ class UserUseCase @Inject constructor(
 	private val userRepository: UserRepository
 ) : ArgUseCase<Flow<Result<UserModel>>, UserUseCase.RetrievalParams> {
 
-	override fun perform(arg: RetrievalParams): Flow<Result<UserModel>> =
-		userRepository.get(UserRepository.RetrievalParams(arg.userId))
-			.distinctUntilChanged()
-			.flowOn(Dispatchers.IO)
+	override fun perform(arg: RetrievalParams): Flow<Result<UserModel>> = flow {
+		userRepository.fetch(UserRepository.RetrievalParams(arg.userId))
+	}
 
 	data class RetrievalParams(
 		val userId: Int

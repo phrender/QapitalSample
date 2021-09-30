@@ -68,14 +68,12 @@ class FeedUseCase @Inject constructor(
 		flowOf(Result.Success(activities.activities.map { activity -> activity.userId }.distinct()))
 	}
 
-	private suspend fun getUsersData(userIds: List<Int>): Result<List<UserModel>> {
+	private fun getUsersData(userIds: List<Int>): Result<List<UserModel>> {
 		val users = ArrayList<UserModel>()
 		userIds.map { id ->
-			userRepository.get(UserRepository.RetrievalParams(id)).collect { result ->
-				when (result) {
-					is Result.Success -> users.add(result.value)
-					is Result.Error -> Result.Error(result.message, result.cause)
-				}
+			when (val result = userRepository.fetch(UserRepository.RetrievalParams(id))) {
+				is Result.Success -> users.add(result.value)
+				is Result.Error -> Result.Error(result.message, result.cause)
 			}
 		}
 		return Result.Success(users)
